@@ -1,5 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
+#include <stdexcept>
+
 #include "contract/UnitConverterContract.hpp"
 
 // Track A — UI / Boundary (ConvertInputParser, ConvertAllUnitsHandler, TableOutputSerializer, JsonOutputSerializer)
@@ -17,7 +19,9 @@ TEST_CASE("TC-A-01 convert_from_input_meter_colon_25_returns_conversion_lines", 
 }
 
 TEST_CASE("TC-A-02 convert_from_input_without_colon_throws_invalid_argument", "[red][boundary]") {
-    FAIL("RED");
+    // Given: colon missing (test_plan B-03 meter2.5)
+    // When/Then: convertFromInput throws std::invalid_argument
+    REQUIRE_THROWS_AS(unit_converter::convertFromInput("meter2.5"), std::invalid_argument);
 }
 
 TEST_CASE("TC-A-03 convert_from_input_negative_value_throws_invalid_argument", "[red][boundary]") {

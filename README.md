@@ -301,8 +301,8 @@ ctest --test-dir build --output-on-failure
 > 각 항목은 RED(실패 테스트 작성) 완료 시 체크합니다.
 
 ### Track A — UI / Boundary 테스트
-- [ ] TC-A-01: 정상 입력 "meter:2.5" → 변환 결과 반환 (Happy Path)
-- [ ] TC-A-02: ":" 없는 입력 → std::invalid_argument 발생
+- [x] TC-A-01: 정상 입력 "meter:2.5" → 변환 결과 반환 (Happy Path)
+- [x] TC-A-02: ":" 없는 입력 → std::invalid_argument 발생
 - [ ] TC-A-03: 음수 입력 "meter:-1.0" → std::invalid_argument 발생
 - [ ] TC-A-04: 없는 단위 "parsec:1.0" → std::invalid_argument 발생
 - [ ] TC-A-05: 소수점 파싱 실패 "meter:abc" → std::invalid_argument 발생
