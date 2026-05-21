@@ -44,4 +44,10 @@ std::string convertFromInputAsJson(const std::string& input) {
     return serializer.serialize(request->unit, request->value, results);
 }
 
+double convert(const std::string& from_unit, double value, const std::string& to_unit) {
+    auto registry = domain::UnitRegistry::bootstrapDefault();
+    domain::LengthConversionService service(registry);
+    return service.convert(from_unit, value, to_unit);
+}
+
 }  // namespace unit_converter
