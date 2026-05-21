@@ -1,0 +1,7 @@
+build/
+.vs/
+*.user
+*.gcda
+*.gcno
+coverage-html/
+*.info
