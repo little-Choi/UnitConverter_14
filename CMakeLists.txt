@@ -52,6 +52,8 @@ add_executable(unit_converter_tests
   tests/boundary/test_table_serializer.cpp
   tests/data/test_config_loader.cpp
   tests/integration/test_dynamic_register.cpp
+  tests/integration/test_golden_master.cpp
+  tests/helpers/GoldenMasterApproval.cpp
   tests/red/test_track_a_ui_red.cpp
   tests/red/test_track_b_logic_red.cpp
 )
@@ -61,8 +63,16 @@ target_link_libraries(unit_converter_tests PRIVATE
   Catch2::Catch2WithMain
 )
 
+add_dependencies(unit_converter_tests UnitConverter)
+
+target_include_directories(unit_converter_tests PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/helpers
+)
+
 target_compile_definitions(unit_converter_tests PRIVATE
   UNIT_CONVERTER_TEST_FIXTURE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures"
+  UNIT_CONVERTER_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+  UNIT_CONVERTER_EXE_PATH="$<TARGET_FILE:UnitConverter>"
 )
 
 include(CTest)
