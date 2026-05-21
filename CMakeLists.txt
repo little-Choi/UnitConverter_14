@@ -49,6 +49,8 @@ add_executable(unit_converter_tests
   tests/boundary/test_table_serializer.cpp
   tests/data/test_config_loader.cpp
   tests/integration/test_dynamic_register.cpp
+  tests/red/test_track_a_ui_red.cpp
+  tests/red/test_track_b_logic_red.cpp
 )
 
 target_link_libraries(unit_converter_tests PRIVATE
