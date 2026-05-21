@@ -312,7 +312,7 @@ ctest --test-dir build --output-on-failure
 ### Track B — Domain / Logic 테스트
 - [x] TC-B-01: convert("meter", 2.5, "feet") == 8.20210 (오차 1e-5)
 - [x] TC-B-02: convert("meter", 1.0, "yard") == 1.09361 (오차 1e-5)
-- [ ] TC-B-03: convert("feet", 1.0, "meter") == 0.30480 (역변환)
+- [x] TC-B-03: convert("feet", 1.0, "meter") == 0.30480 (역변환)
 - [ ] TC-B-04: convertAll("meter", 1.0) → 모든 등록 단위 변환 반환
 - [ ] TC-B-05: registerUnit("cubit", 0.4572) 후 변환 가능
 - [ ] TC-B-06: loadConfig(유효한 경로) → 비율 정상 로드
