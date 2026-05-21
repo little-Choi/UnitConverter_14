@@ -32,8 +32,28 @@ TEST_CASE("TC-B-03 LengthConversionService_convert_feet_to_meter_within_1e_5", "
     REQUIRE(result == Catch::Approx(0.30480).margin(1e-5));
 }
 
-TEST_CASE("TC-B-04 UnitRegistry_register_unit_then_convert", "[red][domain]") {
-    FAIL("RED");
+TEST_CASE("TC-B-04 convertAll_meter_returns_all_registered_units", "[red][domain]") {
+    // Given: default registry (meter, feet, yard) — README TC-B-04
+    // When: convertAll from meter:1.0
+    const auto results = unit_converter::convertAll("meter", 1.0);
+
+    // Then: one entry per registered unit with hub conversions (ε = 1e-5)
+    REQUIRE(results.size() == 3);
+
+    std::size_t matched = 0;
+    for (const auto& entry : results) {
+        if (entry.unit == "meter") {
+            REQUIRE(entry.value == Catch::Approx(1.0).margin(1e-5));
+            ++matched;
+        } else if (entry.unit == "feet") {
+            REQUIRE(entry.value == Catch::Approx(3.28084).margin(1e-5));
+            ++matched;
+        } else if (entry.unit == "yard") {
+            REQUIRE(entry.value == Catch::Approx(1.09361).margin(1e-5));
+            ++matched;
+        }
+    }
+    REQUIRE(matched == 3);
 }
 
 TEST_CASE("TC-B-05 ConfigLoader_load_config_valid_path_applies_ratios", "[red][domain]") {

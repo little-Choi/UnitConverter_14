@@ -50,4 +50,16 @@ double convert(const std::string& from_unit, double value, const std::string& to
     return service.convert(from_unit, value, to_unit);
 }
 
+std::vector<ConvertAllEntry> convertAll(const std::string& from_unit, double value) {
+    auto registry = domain::UnitRegistry::bootstrapDefault();
+    domain::LengthConversionService service(registry);
+    const auto results = service.convertAll(from_unit, value);
+    std::vector<ConvertAllEntry> entries;
+    entries.reserve(results.size());
+    for (const auto& result : results) {
+        entries.push_back(ConvertAllEntry{result.target_symbol, result.raw_value});
+    }
+    return entries;
+}
+
 }  // namespace unit_converter
