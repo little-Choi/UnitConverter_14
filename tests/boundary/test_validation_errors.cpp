@@ -1,3 +1,4 @@
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include "boundary/ConvertInputParser.hpp"
@@ -105,6 +106,38 @@ TEST_CASE("test_register_invalid_factor_zero", "[boundary][exception]") {
     // Then: ERR-INPUT_INVALID_FACTOR
     REQUIRE_FALSE(output.success);
     REQUIRE(output.error.code == boundary::ErrorCode::InputInvalidFactor);
+}
+
+TEST_CASE("test_register_parser_invalid_format", "[boundary][exception]") {
+    boundary::RegisterInputParser parser;
+    boundary::AppError error;
+
+    const auto result = parser.parse("cubit:1", error);
+
+    REQUIRE_FALSE(result.has_value());
+    REQUIRE(error.code == boundary::ErrorCode::InputFormat);
+}
+
+TEST_CASE("test_register_parser_redefine_meter_rejected", "[boundary][exception]") {
+    boundary::RegisterInputParser parser;
+    boundary::AppError error;
+
+    const auto result = parser.parse("1 meter = 1 meter", error);
+
+    REQUIRE_FALSE(result.has_value());
+    REQUIRE(error.code == boundary::ErrorCode::InputInvalidFactor);
+    REQUIRE(error.message == "cannot redefine meter");
+}
+
+TEST_CASE("test_register_parser_success", "[boundary][parse]") {
+    boundary::RegisterInputParser parser;
+    boundary::AppError error;
+
+    const auto result = parser.parse("1 cubit = 0.4572 meter", error);
+
+    REQUIRE(result.has_value());
+    REQUIRE(result->symbol == "cubit");
+    REQUIRE(result->meters_per_unit == Catch::Approx(0.4572).epsilon(1e-9));
 }
 
 TEST_CASE("test_register_duplicate_symbol_error", "[boundary][exception]") {

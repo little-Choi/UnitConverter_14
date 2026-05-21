@@ -48,6 +48,7 @@ add_executable(unit_converter_tests
   tests/domain/test_unit_registry.cpp
   tests/boundary/test_convert_parser.cpp
   tests/boundary/test_validation_errors.cpp
+  tests/boundary/test_error_codes.cpp
   tests/boundary/test_table_serializer.cpp
   tests/data/test_config_loader.cpp
   tests/integration/test_dynamic_register.cpp

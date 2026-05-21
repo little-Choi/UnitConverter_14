@@ -60,3 +60,29 @@ TEST_CASE("test_registry_unknown_unit_not_found", "[domain][registry]") {
     // Then: not registered
     REQUIRE_FALSE(parsec.has_value());
 }
+
+TEST_CASE("test_registry_register_unit_rejects_invalid", "[domain][registry]") {
+    auto registry = domain::UnitRegistry::bootstrapDefault();
+
+    REQUIRE_FALSE(registry.registerUnit("", 1.0));
+    REQUIRE_FALSE(registry.registerUnit("cubit", 0.0));
+    REQUIRE_FALSE(registry.registerUnit("cubit", -1.0));
+    REQUIRE_FALSE(registry.registerUnit("meter", 2.0));
+}
+
+TEST_CASE("test_registry_clear_and_load_definitions", "[domain][registry]") {
+    auto registry = domain::UnitRegistry::bootstrapDefault();
+    const std::vector<domain::UnitDefinition> defs{
+        {"meter", 1.0},
+        {"feet", 0.3048},
+    };
+
+    registry.clear();
+    REQUIRE(registry.size() == 0);
+
+    registry.loadFromDefinitions(defs);
+    REQUIRE(registry.size() == 2);
+    const auto feet = registry.find("feet");
+    REQUIRE(feet.has_value());
+    REQUIRE(feet->meters_per_unit == Catch::Approx(0.3048).epsilon(1e-9));
+}

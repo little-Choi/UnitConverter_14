@@ -60,6 +60,28 @@ TEST_CASE("test_parse_six_decimal_value_success", "[boundary][parse]") {
     REQUIRE(result->value == Catch::Approx(1.123456).epsilon(1e-6));
 }
 
+TEST_CASE("test_parse_empty_input_format_error", "[boundary][parse]") {
+    boundary::ConvertInputParser parser;
+    boundary::AppError error;
+
+    const auto result = parser.parse("", error);
+
+    REQUIRE_FALSE(result.has_value());
+    REQUIRE(error.code == boundary::ErrorCode::InputFormat);
+    REQUIRE(error.message == "empty input");
+}
+
+TEST_CASE("test_parse_trimmed_whitespace_success", "[boundary][parse]") {
+    boundary::ConvertInputParser parser;
+    boundary::AppError error;
+
+    const auto result = parser.parse("  meter:2.5  ", error);
+
+    REQUIRE(result.has_value());
+    REQUIRE(result->unit == "meter");
+    REQUIRE(result->value == Catch::Approx(2.5).epsilon(1e-9));
+}
+
 TEST_CASE("test_parse_large_value_1e100_success", "[boundary][parse]") {
     // Given: very large positive value
     boundary::ConvertInputParser parser;

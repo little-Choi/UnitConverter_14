@@ -319,8 +319,8 @@ ctest --test-dir build --output-on-failure
 - [x] TC-B-07: loadConfig(없는 경로) → 기본값(3.28084/1.09361) 유지
 
 ### 커버리지 목표
-- [ ] Domain Logic: 95%+ (# gcov / lcov)
-- [ ] Boundary Layer: 85%+
+- [x] Domain Logic: 95%+ (# gcov / lcov) — `src/domain/*` **95.5%** line (`build-cov` + lcov)
+- [x] Boundary Layer: 85%+ — `src/boundary/*` **92.5%** line (`build-cov` + lcov)
 - [ ] 전체 TOTAL: 90%+
 
 ### 결함 목록 연결

@@ -125,6 +125,14 @@ TEST_CASE("test_yard_to_feet_small_fraction_precision", "[domain][boundary]") {
     REQUIRE(result == Catch::Approx(meter_value * kMeterToFeet).epsilon(kSixDecimalEpsilon));
 }
 
+TEST_CASE("test_convert_unknown_unit_throws_invalid_argument", "[domain][exception]") {
+    const auto registry = domain::UnitRegistry::bootstrapDefault();
+    domain::LengthConversionService service(registry);
+
+    REQUIRE_THROWS_AS(service.convert("parsec", 1.0, "meter"), std::invalid_argument);
+    REQUIRE_THROWS_AS(service.convert("meter", 1.0, "parsec"), std::invalid_argument);
+}
+
 TEST_CASE("test_convert_all_returns_registry_size", "[domain][boundary]") {
     // Given: default registry size = 3
     const auto registry = domain::UnitRegistry::bootstrapDefault();
