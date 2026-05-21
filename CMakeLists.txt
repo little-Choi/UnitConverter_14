@@ -30,6 +30,7 @@ add_library(unit_converter_core
   src/data/YamlConfigLoader.cpp
   src/control/ConvertAllUnitsHandler.cpp
   src/control/RegisterUnitHandler.cpp
+  src/contract/UnitConverterContract.cpp
 )
 
 target_include_directories(unit_converter_core PUBLIC
