@@ -8,8 +8,24 @@
 #include "domain/UnitRegistry.hpp"
 
 #include <stdexcept>
+#include <vector>
 
 namespace unit_converter {
+
+namespace {
+
+std::vector<domain::UnitDefinition> g_pending_registrations;
+
+domain::UnitRegistry registryWithPending() {
+    auto registry = domain::UnitRegistry::bootstrapDefault();
+    for (const auto& unit : g_pending_registrations) {
+        registry.registerUnit(unit.symbol, unit.meters_per_unit);
+    }
+    g_pending_registrations.clear();
+    return registry;
+}
+
+}  // namespace
 
 std::vector<std::string> convertFromInput(const std::string& input) {
     auto registry = domain::UnitRegistry::bootstrapDefault();
@@ -44,8 +60,12 @@ std::string convertFromInputAsJson(const std::string& input) {
     return serializer.serialize(request->unit, request->value, results);
 }
 
+void registerUnit(const std::string& name, double ratio_to_meter) {
+    g_pending_registrations.push_back(domain::UnitDefinition{name, ratio_to_meter});
+}
+
 double convert(const std::string& from_unit, double value, const std::string& to_unit) {
-    auto registry = domain::UnitRegistry::bootstrapDefault();
+    auto registry = registryWithPending();
     domain::LengthConversionService service(registry);
     return service.convert(from_unit, value, to_unit);
 }

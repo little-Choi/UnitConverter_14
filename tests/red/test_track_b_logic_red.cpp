@@ -56,8 +56,15 @@ TEST_CASE("TC-B-04 convertAll_meter_returns_all_registered_units", "[red][domain
     REQUIRE(matched == 3);
 }
 
-TEST_CASE("TC-B-05 ConfigLoader_load_config_valid_path_applies_ratios", "[red][domain]") {
-    FAIL("RED");
+TEST_CASE("TC-B-05 UnitRegistry_register_unit_cubit_then_convert", "[red][domain]") {
+    // Given: default registry, register cubit (README TC-B-05, DEF-015)
+    unit_converter::registerUnit("cubit", 0.4572);
+
+    // When: convert 1 cubit to meter via contract API
+    const double result = unit_converter::convert("cubit", 1.0, "meter");
+
+    // Then: 1 cubit = 0.4572 meter (domain raw double, ε = 1e-5)
+    REQUIRE(result == Catch::Approx(0.4572).margin(1e-5));
 }
 
 TEST_CASE("TC-B-06 ConfigLoader_load_config_missing_path_keeps_default_ratios", "[red][domain]") {
