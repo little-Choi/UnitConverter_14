@@ -37,7 +37,9 @@ TEST_CASE("TC-A-04 convert_from_input_unknown_unit_throws_invalid_argument", "[r
 }
 
 TEST_CASE("TC-A-05 table_output_preserves_source_unit_and_value", "[red][boundary]") {
-    FAIL("RED");
+    // Given: non-numeric value token (test_plan B-05, test_parse_abc_number_format_error)
+    // When/Then: convertFromInput throws std::invalid_argument
+    REQUIRE_THROWS_AS(unit_converter::convertFromInput("meter:abc"), std::invalid_argument);
 }
 
 TEST_CASE("TC-A-06 json_output_matches_schema", "[red][boundary]") {

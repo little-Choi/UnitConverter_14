@@ -305,7 +305,7 @@ ctest --test-dir build --output-on-failure
 - [x] TC-A-02: ":" 없는 입력 → std::invalid_argument 발생
 - [x] TC-A-03: 음수 입력 "meter:-1.0" → std::invalid_argument 발생
 - [x] TC-A-04: 없는 단위 "parsec:1.0" → std::invalid_argument 발생
-- [ ] TC-A-05: 소수점 파싱 실패 "meter:abc" → std::invalid_argument 발생
+- [x] TC-A-05: 소수점 파싱 실패 "meter:abc" → std::invalid_argument 발생
 - [ ] TC-A-06: 출력 포맷에 원 입력 단위·값 보존 ("2.5 meter = ...")
 - [ ] TC-A-07: value=0 경계값 처리 확인
 
