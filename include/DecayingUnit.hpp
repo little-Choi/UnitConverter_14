@@ -23,5 +23,7 @@ private:
         double meters_per_unit{0.0};
     };
 
+    const UnitEntry* findUnit(const std::string& symbol) const;
+
     std::vector<UnitEntry> units_;
 };

@@ -13,7 +13,7 @@ constexpr double kMeterToYard = 1.09361;
 
 }  // namespace
 
-TEST_CASE("감쇠 단위 변환", "[bonus]") {
+TEST_CASE("DecayingUnit_bonus_register_and_convert", "[bonus]") {
     SECTION("BT-01: registerUnit cubit then cubit to meter") {
         DecayingUnit converter;
         converter.registerUnit("cubit", kCubitMeters);
