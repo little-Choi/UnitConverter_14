@@ -45,6 +45,11 @@ target_link_libraries(UnitConverter PRIVATE unit_converter_core)
 
 enable_testing()
 
+add_library(decaying_unit src/DecayingUnit.cpp)
+target_include_directories(decaying_unit PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
 add_executable(unit_converter_tests
   tests/domain/test_length_conversion.cpp
   tests/domain/test_unit_registry.cpp
@@ -58,10 +63,12 @@ add_executable(unit_converter_tests
   tests/helpers/GoldenMasterApproval.cpp
   tests/red/test_track_a_ui_red.cpp
   tests/red/test_track_b_logic_red.cpp
+  tests/test_decaying_unit.cpp
 )
 
 target_link_libraries(unit_converter_tests PRIVATE
   unit_converter_core
+  decaying_unit
   Catch2::Catch2WithMain
 )
 
