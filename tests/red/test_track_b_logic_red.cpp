@@ -15,7 +15,12 @@ TEST_CASE("TC-B-01 LengthConversionService_convert_meter_to_feet_within_1e_5", "
 }
 
 TEST_CASE("TC-B-02 LengthConversionService_convert_meter_to_yard_within_1e_5", "[red][domain]") {
-    FAIL("RED");
+    // Given: default registry (meter hub), source = 1.0 meter (README TC-B-02)
+    // When: convert meter to yard via contract API
+    const double result = unit_converter::convert("meter", 1.0, "yard");
+
+    // Then: 1.0 * 1.09361 = 1.09361 (domain raw double, ε = 1e-5)
+    REQUIRE(result == Catch::Approx(1.09361).margin(1e-5));
 }
 
 TEST_CASE("TC-B-03 LengthConversionService_convert_all_returns_every_registered_unit", "[red][domain]") {
