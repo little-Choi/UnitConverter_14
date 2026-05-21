@@ -67,6 +67,18 @@ TEST_CASE("TC-B-05 UnitRegistry_register_unit_cubit_then_convert", "[red][domain
     REQUIRE(result == Catch::Approx(0.4572).margin(1e-5));
 }
 
-TEST_CASE("TC-B-06 ConfigLoader_load_config_missing_path_keeps_default_ratios", "[red][domain]") {
-    FAIL("RED");
+TEST_CASE("TC-B-06 ConfigLoader_load_config_valid_path_applies_ratios", "[red][domain]") {
+    // Given: valid units_valid.json (README TC-B-06 — feet 0.3048 m per unit)
+#ifdef UNIT_CONVERTER_TEST_FIXTURE_DIR
+    const std::string path = std::string(UNIT_CONVERTER_TEST_FIXTURE_DIR) + "/units_valid.json";
+#else
+    const std::string path = "tests/fixtures/units_valid.json";
+#endif
+
+    // When: loadConfig then convert meter to feet
+    unit_converter::loadConfig(path);
+    const double result = unit_converter::convert("meter", 2.5, "feet");
+
+    // Then: config ratio (2.5 m = 2.5/0.3048 ft), not default 8.20210
+    REQUIRE(result == Catch::Approx(2.5 / 0.3048).margin(1e-5));
 }

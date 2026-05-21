@@ -4,9 +4,11 @@
 #include "boundary/JsonOutputSerializer.hpp"
 #include "boundary/TableOutputSerializer.hpp"
 #include "control/ConvertAllUnitsHandler.hpp"
+#include "data/ConfigLoader.hpp"
 #include "domain/LengthConversionService.hpp"
 #include "domain/UnitRegistry.hpp"
 
+#include <optional>
 #include <stdexcept>
 #include <vector>
 
@@ -15,8 +17,18 @@ namespace unit_converter {
 namespace {
 
 std::vector<domain::UnitDefinition> g_pending_registrations;
+std::optional<std::vector<domain::UnitDefinition>> g_config_units;
 
 domain::UnitRegistry registryWithPending() {
+    if (g_config_units) {
+        domain::UnitRegistry registry;
+        registry.loadFromDefinitions(*g_config_units);
+        for (const auto& unit : g_pending_registrations) {
+            registry.registerUnit(unit.symbol, unit.meters_per_unit);
+        }
+        g_pending_registrations.clear();
+        return registry;
+    }
     auto registry = domain::UnitRegistry::bootstrapDefault();
     for (const auto& unit : g_pending_registrations) {
         registry.registerUnit(unit.symbol, unit.meters_per_unit);
@@ -80,6 +92,19 @@ std::vector<ConvertAllEntry> convertAll(const std::string& from_unit, double val
         entries.push_back(ConvertAllEntry{result.target_symbol, result.raw_value});
     }
     return entries;
+}
+
+void loadConfig(const std::string& path) {
+    boundary::AppError error;
+    data::JsonConfigLoader json_loader;
+    if (const auto snapshot = json_loader.loadFromFile(path, error)) {
+        g_config_units = snapshot->units;
+        return;
+    }
+    data::YamlConfigLoader yaml_loader;
+    if (const auto snapshot = yaml_loader.loadFromFile(path, error)) {
+        g_config_units = snapshot->units;
+    }
 }
 
 }  // namespace unit_converter

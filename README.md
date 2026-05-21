@@ -315,7 +315,7 @@ ctest --test-dir build --output-on-failure
 - [x] TC-B-03: convert("feet", 1.0, "meter") == 0.30480 (역변환)
 - [x] TC-B-04: convertAll("meter", 1.0) → 모든 등록 단위 변환 반환
 - [x] TC-B-05: registerUnit("cubit", 0.4572) 후 변환 가능
-- [ ] TC-B-06: loadConfig(유효한 경로) → 비율 정상 로드
+- [x] TC-B-06: loadConfig(유효한 경로) → 비율 정상 로드
 - [ ] TC-B-07: loadConfig(없는 경로) → 기본값(3.28084/1.09361) 유지
 
 ### 커버리지 목표
