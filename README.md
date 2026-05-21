@@ -324,8 +324,8 @@ ctest --test-dir build --output-on-failure
 - [ ] 전체 TOTAL: 90%+
 
 ### 결함 목록 연결
-- [ ] defect_list.md 생성 및 발견 결함 기록
-- [ ] 모든 결함 수정 후 회귀 테스트 통과 확인
+- [x] [defect_list.md](docs/defect_list.md) 생성 및 발견 결함 기록 (DEF-001~DEF-023)
+- [x] 모든 **제품 결함**(DEF-001~DEF-017) 수정 후 회귀 테스트 통과 확인 (`ctest` 45/45 Green; 인프라·Should Open: DEF-018~023)
 
 ---
 
@@ -479,6 +479,8 @@ meter,2.5,yard,2.7
 |------|------|
 | [docs/PRD.md](docs/PRD.md) | 제품 요구 정본（AC, REG, 스키마） |
 | [docs/TODO.md](docs/TODO.md) | Must/Should/마일스톤/회귀 체크리스트 |
+| [docs/test_plan.md](docs/test_plan.md) | Catch2 TC·경계값·커버리지 Gate |
+| [docs/defect_list.md](docs/defect_list.md) | RED→GREEN 결함 목록（DEF-001~023） |
 | [docs/requirements.md](docs/requirements.md) | 원본 6시간 실습 요구 |
 
 ---
