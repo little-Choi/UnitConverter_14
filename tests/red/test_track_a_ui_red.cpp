@@ -60,5 +60,7 @@ TEST_CASE("TC-A-06 json_output_matches_schema", "[red][boundary]") {
 }
 
 TEST_CASE("TC-A-07 convert_from_input_zero_value_throws_invalid_argument", "[red][boundary]") {
-    FAIL("RED");
+    // Given: POL-NEG policy, zero value (test_plan B-06 meter:0)
+    // When/Then: convertFromInput throws std::invalid_argument
+    REQUIRE_THROWS_AS(unit_converter::convertFromInput("meter:0"), std::invalid_argument);
 }

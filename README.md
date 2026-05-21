@@ -307,7 +307,7 @@ ctest --test-dir build --output-on-failure
 - [x] TC-A-04: 없는 단위 "parsec:1.0" → std::invalid_argument 발생
 - [x] TC-A-05: 소수점 파싱 실패 "meter:abc" → std::invalid_argument 발생
 - [x] TC-A-06: 출력 포맷에 원 입력 단위·값 보존 ("2.5 meter = ...")
-- [ ] TC-A-07: value=0 경계값 처리 확인
+- [x] TC-A-07: value=0 경계값 처리 확인
 
 ### Track B — Domain / Logic 테스트
 - [ ] TC-B-01: convert("meter", 2.5, "feet") == 8.20210 (오차 1e-5)
