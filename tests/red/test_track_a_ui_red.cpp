@@ -25,7 +25,9 @@ TEST_CASE("TC-A-02 convert_from_input_without_colon_throws_invalid_argument", "[
 }
 
 TEST_CASE("TC-A-03 convert_from_input_negative_value_throws_invalid_argument", "[red][boundary]") {
-    FAIL("RED");
+    // Given: POL-NEG policy, negative value (test_plan B-07 meter:-1.0)
+    // When/Then: convertFromInput throws std::invalid_argument
+    REQUIRE_THROWS_AS(unit_converter::convertFromInput("meter:-1.0"), std::invalid_argument);
 }
 
 TEST_CASE("TC-A-04 convert_from_input_unknown_unit_throws_invalid_argument", "[red][boundary]") {
