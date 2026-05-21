@@ -27,8 +27,10 @@ add_library(unit_converter_core
   src/boundary/TableOutputSerializer.cpp
   src/boundary/JsonOutputSerializer.cpp
   src/boundary/ErrorCodes.cpp
+  src/boundary/ConsoleErrorWriter.cpp
   src/data/JsonConfigLoader.cpp
   src/data/YamlConfigLoader.cpp
+  src/control/ApplicationBootstrap.cpp
   src/control/ConvertAllUnitsHandler.cpp
   src/control/RegisterUnitHandler.cpp
   src/contract/UnitConverterContract.cpp
