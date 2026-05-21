@@ -82,3 +82,27 @@ TEST_CASE("TC-B-06 ConfigLoader_load_config_valid_path_applies_ratios", "[red][d
     // Then: config ratio (2.5 m = 2.5/0.3048 ft), not default 8.20210
     REQUIRE(result == Catch::Approx(2.5 / 0.3048).margin(1e-5));
 }
+
+TEST_CASE("TC-B-07 ConfigLoader_load_config_missing_path_keeps_default_ratios", "[red][domain]") {
+    // Given: non-default config loaded, then missing path (README TC-B-07)
+#ifdef UNIT_CONVERTER_TEST_FIXTURE_DIR
+    const std::string custom_path =
+        std::string(UNIT_CONVERTER_TEST_FIXTURE_DIR) + "/units_non_default.json";
+    const std::string missing_path =
+        std::string(UNIT_CONVERTER_TEST_FIXTURE_DIR) + "/units_does_not_exist.json";
+#else
+    const std::string custom_path = "tests/fixtures/units_non_default.json";
+    const std::string missing_path = "tests/fixtures/units_does_not_exist.json";
+#endif
+    unit_converter::loadConfig(custom_path);
+    REQUIRE(unit_converter::convert("meter", 1.0, "feet") == Catch::Approx(2.0).margin(1e-5));
+
+    // When: loadConfig on missing path
+    unit_converter::loadConfig(missing_path);
+    const double feet_result = unit_converter::convert("meter", 1.0, "feet");
+    const double yard_result = unit_converter::convert("meter", 1.0, "yard");
+
+    // Then: built-in defaults 3.28084 / 1.09361 (ε = 1e-5)
+    REQUIRE(feet_result == Catch::Approx(3.28084).margin(1e-5));
+    REQUIRE(yard_result == Catch::Approx(1.09361).margin(1e-5));
+}

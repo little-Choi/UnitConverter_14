@@ -104,7 +104,9 @@ void loadConfig(const std::string& path) {
     data::YamlConfigLoader yaml_loader;
     if (const auto snapshot = yaml_loader.loadFromFile(path, error)) {
         g_config_units = snapshot->units;
+        return;
     }
+    g_config_units.reset();
 }
 
 }  // namespace unit_converter

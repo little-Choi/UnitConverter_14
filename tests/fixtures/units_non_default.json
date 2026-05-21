@@ -1,0 +1,8 @@
+{
+  "base_unit": "meter",
+  "units": [
+    { "symbol": "meter", "meters_per_unit": 1.0 },
+    { "symbol": "feet", "meters_per_unit": 0.5 },
+    { "symbol": "yard", "meters_per_unit": 0.5 }
+  ]
+}
