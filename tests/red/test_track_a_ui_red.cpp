@@ -31,7 +31,9 @@ TEST_CASE("TC-A-03 convert_from_input_negative_value_throws_invalid_argument", "
 }
 
 TEST_CASE("TC-A-04 convert_from_input_unknown_unit_throws_invalid_argument", "[red][boundary]") {
-    FAIL("RED");
+    // Given: bootstrap registry without parsec (test_plan B-04, test_handler_unknown_unit_parsec)
+    // When/Then: convertFromInput throws std::invalid_argument
+    REQUIRE_THROWS_AS(unit_converter::convertFromInput("parsec:1.0"), std::invalid_argument);
 }
 
 TEST_CASE("TC-A-05 table_output_preserves_source_unit_and_value", "[red][boundary]") {
