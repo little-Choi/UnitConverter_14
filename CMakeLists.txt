@@ -25,6 +25,7 @@ add_library(unit_converter_core
   src/boundary/ConvertInputParser.cpp
   src/boundary/RegisterInputParser.cpp
   src/boundary/TableOutputSerializer.cpp
+  src/boundary/JsonOutputSerializer.cpp
   src/boundary/ErrorCodes.cpp
   src/data/JsonConfigLoader.cpp
   src/data/YamlConfigLoader.cpp

@@ -6,7 +6,7 @@
 namespace unit_converter {
 
 /// Parses "unit:value", converts to all registered targets, returns display lines.
-/// Contract: "2.5 meter = 8.202100 feet" (source unit/value preserved, target 6 decimals).
+/// Contract: "2.5 meter = 8.2 feet" (source unit/value preserved, target 1 decimal half-up).
 /// Throws std::invalid_argument on malformed input, non-positive value, or unknown unit.
 std::vector<std::string> convertFromInput(const std::string& input);
 

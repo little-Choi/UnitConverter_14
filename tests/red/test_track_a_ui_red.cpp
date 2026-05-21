@@ -43,7 +43,20 @@ TEST_CASE("TC-A-05 table_output_preserves_source_unit_and_value", "[red][boundar
 }
 
 TEST_CASE("TC-A-06 json_output_matches_schema", "[red][boundary]") {
-    FAIL("RED");
+    // Given: meter:2.5, default registry (test_plan B-10, PRD §6.2 OUT-03)
+    // When: convertFromInputAsJson
+    const auto json = unit_converter::convertFromInputAsJson("meter:2.5");
+
+    // Then: JSON schema — source preserved; conversions length = Registry.size(); half-up targets
+    const std::string expected = R"({
+  "source": { "unit": "meter", "value": 2.5 },
+  "conversions": [
+    { "unit": "meter", "value": 2.5 },
+    { "unit": "feet", "value": 8.2 },
+    { "unit": "yard", "value": 2.7 }
+  ]
+})";
+    REQUIRE(json == expected);
 }
 
 TEST_CASE("TC-A-07 convert_from_input_zero_value_throws_invalid_argument", "[red][boundary]") {
